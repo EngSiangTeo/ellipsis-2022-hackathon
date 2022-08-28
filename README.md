@@ -1,8 +1,8 @@
 # ellipsis-2022-hackathon
 
 ## Pitch Files 
-[Pitch Slides](https://drive.google.com/file/d/1TvxmM39Vt_4ELbINPglsdBGV9JTG0UaW/view?usp=sharing)
-[Pitch Video](https://drive.google.com/file/d/1PiNjrZMMLvj_1GywXFTWMIKkJgg_aT6J/view?usp=sharing)
+- [Pitch Slides](https://drive.google.com/file/d/1TvxmM39Vt_4ELbINPglsdBGV9JTG0UaW/view?usp=sharing)
+- [Pitch Video](https://drive.google.com/file/d/1PiNjrZMMLvj_1GywXFTWMIKkJgg_aT6J/view?usp=sharing)
 
 ## What do you need
 
