@@ -32,10 +32,12 @@
 8. Start api development server
 <pre>
 $ cd api
+$ pip install -r requirements.txt
 $ python app.py
 </pre>
 9. Start web development server
 <pre>
 $ cd web
+$ npm i
 $ npm run dev
 </pre>
