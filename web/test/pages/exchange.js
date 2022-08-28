@@ -4,16 +4,47 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Web3 from "web3";
 import { GoldTokenABI } from "../contracts";
+import NavBar from "./navbar"
+
 const web3 = new Web3(Web3.givenProvider);
 
 function Exchange() {
   const [tokens, setTokens] = useState();
   const [transferAdd, setTransferAdd] = useState();
   const [transferAmt, setTransferAmt] = useState();
+  const [username, setUsername] = useState();
   const [matic, setMatic] = useState(0);
   const [balance, setBalance] = useState(0);
   const address = useAddress();
   const router = useRouter();
+
+  useEffect(() => {
+    if (address){
+      const requestOptions = {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin':'*'
+        },
+        body: JSON.stringify({
+          "wallet" : address
+        })
+    };
+
+    fetch("/login", requestOptions)
+      .then((result) => {
+        result.text().then(text => {
+          if(text != "not ok"){
+            setUsername(text)
+          }else{
+            router.replace("/new");
+          }
+        })
+      },(error) => {
+         console.error(error);
+    });
+    }
+  }, [address]);
 
   const purchase = async () => {
     const accounts = await web3.eth.getAccounts();
@@ -51,7 +82,7 @@ function Exchange() {
 
       const token = new web3.eth.Contract(
           GoldTokenABI,
-          "0x5F93d06DEb0EB1a688F0Ff7Aa9173353d1A8f85A"
+          process.env.NEXT_PUBLIC_GOLD_TOKEN_ADDRESS
         );
 
       const request = await token.methods.transfer(transferAdd.toString(), transferAmt.toString()).send({
@@ -102,9 +133,9 @@ function Exchange() {
     
     const token = new web3.eth.Contract(
       GoldTokenABI,
-      "0x5F93d06DEb0EB1a688F0Ff7Aa9173353d1A8f85A"
+      process.env.NEXT_PUBLIC_GOLD_TOKEN_ADDRESS
     );
-
+    console.log(process.env.NEXT_PUBLIC_GOLD_TOKEN_ADDRESS)
     const request = await token.methods.balanceOf(accounts[0]).call();
 
     setBalance(request)
@@ -124,8 +155,9 @@ function Exchange() {
       <Head>
         <title>Exchange GOLD tokens</title>
       </Head>
+      <NavBar name="exchange" username={username}/>
       <div className="exchange__container">
-        <h1>Purchase GOLD Tokens</h1>
+        <h1>Welcome, {username}</h1>
         <h2>Balance</h2>
         <b>{balance} GOLD (${balance/100})</b>
         <input
